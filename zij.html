@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
+    <style>
+        span.e {
+            color: red;
+            font-weight: bold;
+        }
+
+        span.ok {
+            color: #00D300;
+            font-weight: bold;
+        }
+
+        button {
+            font-size: 14pt;
+        }
+
+        html, body {
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            font-family: Inconsolata, monospace, sans-serif;
+        }
+
+        .mono, .mono * {
+            font-family: Inconsolata, monospace;
+        }
+
+
+        table.layout_tbl {
+            height: 100%;
+            width: 100%;
+        }
+
+
+        table#body {
+            border-collapse: collapse;
+        }
+
+        table#body > tbody > tr > td {
+            vertical-align: top;
+        }
+
+        table#body > tbody > tr > td.tasks {
+            /*width: 20%;*/
+        }
+
+        table#body > tbody > tr > td.source {
+        }
+
+        /* tasks */
+
+        .tasks div.active {
+            background: rgb(236, 236, 236);
+        }
+        .tasks div {
+            padding: 1em 2em;
+            border: 1px solid lightgrey;
+            border-top-width: 0;
+            cursor: pointer;
+            /*font-weight: bold;*/
+        }
+
+        /* source */
+        .source {
+            padding: 0.5em 2em;
+        }
+
+        .source .editor {
+            padding: 0.5em;
+            border: 1px solid #8c8c8c;
+            background: #1B1B1B;
+        }
+
+        .source textarea {
+            width: 100%;
+            height: 100%;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            border: 0;
+            background: transparent;
+            padding:0;
+            margin:0;
+            outline: none;
+            font-size: 12pt;
+            color: rgb(255, 239, 175);
+        }
+
+        .source .desc {
+            font-size: 10pt;
+            margin: 2em 0;
+            text-align: left;;
+        }
+
+        .source .controls {
+            padding: 0.5em 0;
+        }
+        /***/
+
+        /* result */
+        .result {
+            padding: 0.5em 2em;
+            vertical-align: top;
+        }
+
+        .result > div {
+        }
+
+        .result table.level_1 td {
+            border: 1px solid #ADADAD;
+            padding: 0.25em 0.5em;
+        }
+        /***/
+
+
+        div.source, div.result {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+
+    </style>
+    <script type="application/javascript">
+        window.onload = function () {
+
+
+            function e(line, msg, code) {
+                throw new Error("Error (line: " + line + "): " + msg + (code ? " (source:'... " + code + " ...')" : ""));
+            }
+
+            function run(mem, source) {
+                mem = mem.slice(0);
+                var lines = source.split("\n");
+
+                var line, args;
+
+                var labels = {};
+                for (var i = 0; i < lines.length; i++) {
+                    line = lines[i];
+                    if (/^\s*\w+:.*/.test(line)) {
+                        labels[line.split(":")[0].trim().substr(0, line.length - 1)] = i;
+                    }
+                }
+
+                var maxInterations = 1000;
+
+                var ip = 0;
+                while (ip < lines.length) {
+
+                    if (--maxInterations == 0) throw new Error("Too much iterations!");
+
+                    line = lines[ip];
+
+                    line = line
+                            .replace(/\s+/, " ")
+                            .replace(/^\s*\w+:\s*/, "")
+                            .replace(/\/\/.*/g, "")
+                            .trim();
+
+                    if (line == "") {
+                        ip++;
+                        continue
+                    }
+
+                    switch (line.charAt(0)) {
+                        case "Z":
+                            args = line.split(" ");
+                            if (args.length != 2) e(ip, "bad args", line);
+                            if (!/[0-9]+/.test(args[1])) e(ip, "bad address", args[1]);
+                            mem[parseInt(args[1])] = 0;
+                            break;
+                        case "I":
+                            args = line.split(" ");
+                            if (args.length != 2) e(ip, "bad args: ", line);
+                            if (!/[0-9]+/.test(args[1])) e(ip, "bad address", args[1]);
+                            if(mem[parseInt(args[1])]===undefined) e(ip, "trying to increment uninitialized memory", args[1]);
+                            mem[parseInt(args[1])] = (mem[parseInt(args[1])] || 0) + 1;
+                            break;
+                        case "J":
+                            var line2 = line.substr(1);
+                            args = line2.split("->");
+                            if (args.length != 2) e(ip, "bad args", line);
+
+                            var i0i1 = args[0].trim().split(",");
+                            if (i0i1.length != 2) e(ip, "bad address format", i0i1);
+                            if (!/\s*[0-9]+\s*/.test(i0i1[0])) e(ip, "bad address", i0i1[0]);
+                            if (!/\s*[0-9]+\s*/.test(i0i1[1])) e(ip, "bad address", i0i1[1]);
+                            if(mem[parseInt(i0i1[0])]===undefined) e(ip, "trying to access uninitialized memory", i0i1[0]);
+                            if(mem[parseInt(i0i1[1])]===undefined) e(ip, "trying to access uninitialized memory", i0i1[1]);
+
+                            if ((mem[parseInt(i0i1[0])] || 0) != (mem[parseInt(i0i1[1])] || 0)) {
+
+                                var label = args[1].trim();
+                                if (labels[label] === undefined) {
+                                    e(ip, "no such label", label);
+                                }
+                                ip = labels[label];
+                                continue;
+                            }
+                            break;
+                        default:
+                            e(ip, "bad command", line);
+                    }
+
+                    ip++;
+                }
+
+                return mem;
+
+            }
+
+            /*
+             UI logic
+             */
+
+            var print = (function () {
+
+                function toHtml(msg, level) {
+                    if (msg && msg.constructor === Array) {
+                        var html = "<table class='level_" + level + "'><tr>";
+
+                        for (var i = 0; i < msg.length; i++) {
+                            var x = msg[i];
+                            html += "<td>" + toHtml(x, level + 1) + "</td>"
+                        }
+                        return html
+                    }
+                    else {
+                        return "<div>" + msg + "<div>"
+                    }
+                }
+
+                return function (msg) {
+                    document.querySelector(".result > div").innerHTML += toHtml(msg, 0);
+                }
+            })();
+
+            function clear() {
+                document.querySelector(".result").innerHTML = "<div></div>";
+            }
+
+
+            var runButton = document.querySelector("#run");
+            var sourceTextarea = document.querySelector("#source");
+            var resultTable = document.querySelector("div.result table");
+            var memoryInput = document.querySelector("#mem");
+
+            runButton.addEventListener('click', function () {
+
+                clear();
+
+                try {
+                    for (var i = 0; i < state.task.tests.length; i++) {
+                        var test = state.task.tests[i];
+
+                        var source = sourceTextarea.value;
+                        var memory = test.from;
+
+                        print("-------- Next test ------");
+                        print(["Initial memory: ", test.from]);
+                        print(["Expected result: ", test.to]);
+                        var result = run(memory, source);
+                        var failed = false;
+                        for (var j = 0; j < test.to.length; j++) {
+                            var shouldBe = test.to[j];
+                            var actual = result[j];
+                            if (shouldBe != "x" && shouldBe !== actual) {
+                                result[j] = "<span class='e'>" + actual + "</span>";
+                                failed = true;
+                                break;
+                            }
+                        }
+                        print(["Actual result: ", result]);
+
+                        if (failed) {
+                            throw new Error("Test failed, something wrong with your code!");
+                        }
+
+                    }
+                    print(["<span class='ok'>Solved!</span>"])
+                } catch (e) {
+                    print("<span class='e'>" + e.message + "</span>");
+                }
+
+
+            });
+
+
+            /*
+             Data, state and render
+             */
+
+            function render(state) {
+                document.querySelector(".desc").innerHTML = state.task.desc;
+                document.querySelector(".tasks").innerHTML = state.tasks.map(function (task) {
+                    return "<div " + (task.id == state.task.id ? "class='active'" : "")+ ">"
+                            + task.title.replace(/\s/g, "&nbsp;")
+                            + "</div>"
+                }).join("")
+                for (var i = 0; i < document.querySelector(".tasks").childNodes.length; i++) {
+                    var taskDiv = document.querySelector(".tasks").childNodes[i];
+                    taskDiv.addEventListener('click', (function(){ var task = state.tasks[i]; return function(){
+                        state.task = task;
+                        render(state);
+                    }})())
+                }
+            }
+
+            var tasks = [
+                {
+                    id: 0,
+                    title: "Sandbox",
+                    desc: "Do what you want",
+                    tests: [
+                        {from: [], to: []}
+                    ]
+                },
+                {
+                    id: 1,
+                    title: "Sum of numbers",
+                    desc: "You have two numbers in cells 0 and 1. Put sum of them in cell 2",
+                    tests: [
+                        {from: [3, 4], to: ["x", "x", 7]}
+                        , {from: [3, 0], to: ["x", "x", 3]}
+                        , {from: [0, 4], to: ["x", "x", 4]}
+                        , {from: [0, 0], to: ["x", "x", 0]}
+                    ]
+                },
+                {
+                    id: 2,
+                    title: "Set 0 cell to 1",
+                    desc: "Set 0 cell to 1",
+                    tests: [
+                        {from: [-1], to: [1]}
+                    ]
+                },
+                {
+                    id: 3,
+                    title: "Move number",
+                    desc: "Move number",
+                    tests: [
+                        {from: [10], to: [10,10]}
+                    ]
+                },
+                {
+                    id: 4,
+                    title: "Multiply two numbers",
+                    desc: "Multiply two numbers",
+                    tests: [
+                        {from: [3, 4], to: ["x", "x", 21]}
+                        , {from: [3, 0], to: ["x", "x", 0]}
+                        , {from: [0, 4], to: ["x", "x", 0]}
+                        , {from: [0, 0], to: ["x", "x", 0]}
+                    ]
+                }
+            ];
+
+            var state = {
+                tasks: tasks,
+                task: tasks[0]
+            };
+
+            render(state);
+
+            runButton.focus();
+        }
+    </script>
+</head>
+<body>
+
+<table id="body" class="layout_tbl">
+    <tr>
+        <td class="tasks">
+
+        </td>
+        <td class="source">
+            <table class="layout_tbl">
+                <tr>
+                    <td colspan="2">
+                        <div class="desc"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="editor" style="height: 100%; width: 50%">
+                        <textarea class="mono" cols="80" rows="20" id="source"
+                            ></textarea>
+
+                    </td>
+                    <td class="result mono">
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="controls">
+                        <button id="run">Run</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+
+</body>
+</html>
