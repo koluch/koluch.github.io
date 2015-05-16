@@ -128,12 +128,16 @@
     <script type="application/javascript">
         window.onload = function () {
 
-
+            /*
+               Interpreter
+            */
             function e(line, msg, code) {
                 throw new Error("Error (line: " + line + "): " + msg + (code ? " (source:'... " + code + " ...')" : ""));
             }
 
             function run(mem, source) {
+
+
                 mem = mem.slice(0);
                 var lines = source.split("\n");
 
@@ -147,7 +151,7 @@
                     }
                 }
 
-                var maxInterations = 1000;
+                var maxInterations = 10000;
 
                 var ip = 0;
                 while (ip < lines.length) {
@@ -167,17 +171,18 @@
                         continue
                     }
 
+                    var addrExp = /[0-9]+/;
                     switch (line.charAt(0)) {
                         case "Z":
                             args = line.split(" ");
                             if (args.length != 2) e(ip, "bad args", line);
-                            if (!/[0-9]+/.test(args[1])) e(ip, "bad address", args[1]);
+                            if (!addrExp.test(args[1])) e(ip, "bad address", args[1]);
                             mem[parseInt(args[1])] = 0;
                             break;
                         case "I":
                             args = line.split(" ");
-                            if (args.length != 2) e(ip, "bad args: ", line);
-                            if (!/[0-9]+/.test(args[1])) e(ip, "bad address", args[1]);
+                            if (args.length != 2) e(ip, "bad args", line);
+                            if (!addrExp.test(args[1])) e(ip, "bad address format", args[1]);
                             if(mem[parseInt(args[1])]===undefined) e(ip, "trying to increment uninitialized memory", args[1]);
                             mem[parseInt(args[1])] = (mem[parseInt(args[1])] || 0) + 1;
                             break;
@@ -186,15 +191,14 @@
                             args = line2.split("->");
                             if (args.length != 2) e(ip, "bad args", line);
 
-                            var i0i1 = args[0].trim().split(",");
+                            var i0i1 = args[0].trim().split(",").map(function(x){return x.trim()});
                             if (i0i1.length != 2) e(ip, "bad address format", i0i1);
-                            if (!/\s*[0-9]+\s*/.test(i0i1[0])) e(ip, "bad address", i0i1[0]);
-                            if (!/\s*[0-9]+\s*/.test(i0i1[1])) e(ip, "bad address", i0i1[1]);
+                            if (!addrExp.test(i0i1[0])) e(ip, "bad address format", i0i1[0]);
+                            if (!addrExp.test(i0i1[1])) e(ip, "bad address format", i0i1[1]);
                             if(mem[parseInt(i0i1[0])]===undefined) e(ip, "trying to access uninitialized memory", i0i1[0]);
                             if(mem[parseInt(i0i1[1])]===undefined) e(ip, "trying to access uninitialized memory", i0i1[1]);
 
                             if ((mem[parseInt(i0i1[0])] || 0) != (mem[parseInt(i0i1[1])] || 0)) {
-
                                 var label = args[1].trim();
                                 if (labels[label] === undefined) {
                                     e(ip, "no such label", label);
@@ -217,7 +221,12 @@
             /*
              UI logic
              */
+            var runButton = document.querySelector("#run");
+            var sourceTextarea = document.querySelector("#source");
 
+            /*
+                Functions for display execution information
+            */
             var print = (function () {
                 function toHtml(msg, level) {
                     if (msg && msg.constructor === Array) {
@@ -243,11 +252,6 @@
                 document.querySelector(".result").innerHTML = "<div></div>";
             }
 
-
-            var runButton = document.querySelector("#run");
-            var sourceTextarea = document.querySelector("#source");
-            var resultTable = document.querySelector("div.result table");
-            var memoryInput = document.querySelector("#mem");
 
             runButton.addEventListener('click', function () {
 
@@ -366,6 +370,9 @@
                 }
             ];
 
+            /*
+                Initialize view
+             */
             var state = {
                 tasks: tasks,
                 task: tasks[0]
