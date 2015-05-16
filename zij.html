@@ -219,7 +219,6 @@
              */
 
             var print = (function () {
-
                 function toHtml(msg, level) {
                     if (msg && msg.constructor === Array) {
                         var html = "<table class='level_" + level + "'><tr>";
@@ -287,8 +286,15 @@
                     print("<span class='e'>" + e.message + "</span>");
                 }
 
-
             });
+
+            sourceTextarea.addEventListener("keydown", function(e){
+                if((e.ctrlKey || e.metaKey) && e.keyCode == 13) {
+                    runButton.click();
+                }
+            });
+
+
 
 
             /*
@@ -301,7 +307,7 @@
                     return "<div " + (task.id == state.task.id ? "class='active'" : "")+ ">"
                             + task.title.replace(/\s/g, "&nbsp;")
                             + "</div>"
-                }).join("")
+                }).join("");
                 for (var i = 0; i < document.querySelector(".tasks").childNodes.length; i++) {
                     var taskDiv = document.querySelector(".tasks").childNodes[i];
                     taskDiv.addEventListener('click', (function(){ var task = state.tasks[i]; return function(){
@@ -367,7 +373,7 @@
 
             render(state);
 
-            runButton.focus();
+            sourceTextarea.focus();
         }
     </script>
 </head>
