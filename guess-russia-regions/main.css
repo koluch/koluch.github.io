@@ -1,0 +1,154 @@
+* {
+    font-family: Helvetica;
+}
+
+.share_panel {
+    margin: 0.5em 0em 2em;
+}
+
+.share_panel .widget {
+    display: inline-block;
+    vertical-align: top;
+    padding: 5px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.fix {
+    position: fixed;
+}
+
+.pan {
+    opacity: 0.5;
+    border: 1px solid rgb(126, 126, 126);
+    border-radius: 15px;
+    background-color: white;
+}
+
+
+.hcenter_wrapper {
+    margin: auto;
+    width: 100%;
+    text-align: center;
+}
+
+.hcenter_wrapper > div {
+    display: inline-block;
+}
+
+#game_state #stats {
+    position: fixed;
+    right: 30px;
+    top: 40px;
+    padding: 1em;
+}
+
+#game_state .message {
+    top: 45%;
+}
+
+#game_state #mistakes_count {
+    font-weight: bold;
+}
+
+#current_region_wrapper {
+    top: 20px;
+}
+
+
+.message > div,
+#current_region_wrapper > div
+{
+    font-size: 16pt;
+    font-weight: bold;
+    padding: 0.6em;
+}
+
+#correct_msg_wrapper {
+}
+
+#correct_msg_wrapper > div{
+    top: 100px;
+    color: rgb(0, 72, 0);
+    background: rgb(91, 255, 8);
+}
+
+#wrong_msg_wrapper > div{
+    background: rgb(255, 105, 105);
+    color: rgb(93, 0, 0);
+}
+
+#next_level_msg_wrapper > div{
+    background: rgb(0, 209, 255);
+    color: rgb(20, 22, 105);
+}
+
+
+
+.modal * {
+
+}
+
+.modal {
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    display: table;
+    z-index: 9999;
+}
+
+.modal .modal_row {
+    display: table-row;
+}
+
+.modal .modal_cell {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.modal .modal_body {
+    max-width: 500px;
+    text-align: center;
+    margin: auto;
+    border: 1px solid rgb(64, 64, 64);
+    padding: 1em;
+    background: rgba(98, 98, 98, 0.67);
+    color: rgb(255, 255, 255);
+    border-radius: 10px;
+}
+
+#modal_bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.47);
+    z-index: 9998;
+}
+
+h1 {
+    padding: 0;
+    margin: 0;   padding: 0;
+    font-size: 18pt;
+}
+
+button {
+    background: rgb(127, 127, 127);
+    border: 1px solid rgb(136, 136, 136);
+    border-radius: 5px;
+    font-size: 16pt;
+    color: white;
+    /* margin: 10pt; */
+    padding: 2pt 8pt;
+}
+
+div#finish_msg {
+    margin: 2em 0em 0.25em;
+    font-size: 14pt;
+}
