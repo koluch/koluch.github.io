@@ -105,7 +105,7 @@ sharing = new function(){
 
 
     this.updateButtons = function(guessed) {
-        var resultMsg = 'Хорошо ли ты знаешь Россию? Я отгадал '+language.toNum(guessed, "регион");
+        var resultMsg = 'Хорошо ли вы знаете Россию? Я отгадал '+language.toNum(guessed, "регион");
         $("#twitter_button_holder").innerHTML = '<a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-text="'+resultMsg+'" data-hashtags="guess-russia-regions">Tweet</a>';
         twttr.widgets.load();
 
