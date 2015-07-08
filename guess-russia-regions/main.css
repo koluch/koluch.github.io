@@ -160,17 +160,17 @@ div#finish_msg {
 .fb_iframe_widget {
     display: block !important;
     position: static !important;
-    width: 55px !important;
+    width: 92px !important;
     height: 20px !important;
 
 }
 
 .fb_iframe_widget > span {
-    min-width: 60px !important;
+    min-width: 92px !important;
     display: block !important;
 }
 
 #fb_button_holder iframe {
-    width: 55px !important;
+    width: 92px !important;
     height: 20px !important;
 }

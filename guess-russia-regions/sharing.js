@@ -44,7 +44,8 @@ sharing = new function(){
         parent.innerHTML += '<div class="widget" id="fb_button_holder">'
         + '<div class="fb-share-button"'
         + ' data-href="http://koluch.github.io/guess-russia-regions/"'
-        + ' data-layout="button"></div>'
+        + ' data-layout="button"'
+        + ' data-lang="ru"></div>'
         + '<div id="fb-root"></div>'
         + '</div>';
         (function (d, s, id) {
@@ -52,9 +53,10 @@ sharing = new function(){
             if (d.getElementById(id)) return;
             js = d.createElement(s);
             js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3";
+            js.src = "//connect.facebook.net/ru_RU/sdk.js#xfbml=1&version=v2.3";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
+
 
 
         /*parent.innerHTML += '<div class="widget" id="fb_button_wrapper">' +
@@ -108,7 +110,7 @@ sharing = new function(){
         var resultMsg = 'Хорошо ли вы знаете Россию? Я отгадал '+language.toNum(guessed, "регион");
 
         // Update twitter button
-        $("#twitter_button_holder").innerHTML = '<a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-text="'+resultMsg+'" data-hashtags="guess-russia-regions">Tweet</a>';
+        $("#twitter_button_holder").innerHTML = '<a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-lang="ru" data-text="'+resultMsg+'" data-hashtags="guess-russia-regions">Твитнуть</a>';
         twttr.widgets.load();
 
         // Updat VK button
