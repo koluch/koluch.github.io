@@ -97,6 +97,7 @@ sharing = new function(){
             FB.ui({
                 method: 'feed',
                 link: 'http://koluch.github.io/guess-russia-regions/',
+                name: 'test name',
                 caption: resultMsg,
                 description: 'Игра, в которой нужно правильно угадать расположение регионов России'
             }, function(response){});
