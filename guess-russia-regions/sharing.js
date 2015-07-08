@@ -90,7 +90,7 @@ sharing = new function(){
         twttr.widgets.load();
 
         // Update FB button
-        var oldFbButton = $("#twitter_button_holder #fb_share");
+        var oldFbButton = $("#fb_button_holder #fb_share");
         var newFbButton = oldFbButton.cloneNode(true);
         oldFbButton.parentNode.replaceChild(newFbButton, oldFbButton);
         newFbButton.addEventListener("click", function() {
