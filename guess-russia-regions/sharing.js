@@ -41,7 +41,7 @@ sharing = new function(){
 
 
         // facebook loading
-        /*parent.innerHTML += '<div class="widget" id="fb_button_holder">'
+        parent.innerHTML += '<div class="widget" id="fb_button_holder">'
         + '<div class="fb-share-button"'
         + ' data-href="http://koluch.github.io/guess-russia-regions/"'
         + ' data-layout="button"'
@@ -60,38 +60,6 @@ sharing = new function(){
             if (d.getElementById(id)) {return;}
             js = d.createElement(s); js.id = id;
             js.src = "//connect.facebook.net/ru_RU/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-        ;*/
-
-
-
-        parent.innerHTML += '<div class="widget" id="fb_button_wrapper">' +
-                                '<div id="fb-root"></div>' +
-                                '<button id="fb_share">Share</button>' +
-                            '</div>';
-
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId      : '405695916297888',
-                xfbml      : true,
-                version    : 'v2.4'
-            });
-            $("#fb_share").addEventListener("click", function() {
-                FB.ui({
-                    method: 'feed',
-                    link: 'http://koluch.github.io/guess-russia-regions/',
-                    caption: 'Хорошо ли вы знаете Россию',
-                    description:"Игра, в которой нужно правильно угадать расположение регионов России"
-                }, function(response){});
-            })
-        };
-
-        (function(d, s, id){
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
 
