@@ -52,14 +52,7 @@ sharing = new function(){
                 xfbml      : true,
                 version    : 'v2.3'
             });
-            $("#fb_share").addEventListener("click", function() {
-                FB.ui({
-                    method: 'feed',
-                    link: 'http://koluch.github.io/guess-russia-regions/',
-                    caption: 'Хорошо ли вы знаете Россию?',
-                    description: 'Игра, в которой нужно правильно угадать расположение регионов России'
-                }, function(response){});
-            })
+
         };
 
         (function(d, s, id){
@@ -95,6 +88,20 @@ sharing = new function(){
         // Update twitter button
         $("#twitter_button_holder").innerHTML = '<a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-lang="ru" data-text="'+resultMsg+'" data-hashtags="guess-russia-regions">Твитнуть</a>';
         twttr.widgets.load();
+
+        // Update FB button
+        var oldFbButton = $("#twitter_button_holder #fb_share");
+        var newFbButton = oldFbButton.cloneNode(true);
+        oldFbButton.parentNode.replaceChild(newFbButton, oldFbButton);
+        newFbButton.addEventListener("click", function() {
+            FB.ui({
+                method: 'feed',
+                link: 'http://koluch.github.io/guess-russia-regions/',
+                caption: resultMsg,
+                description: 'Игра, в которой нужно правильно угадать расположение регионов России'
+            }, function(response){});
+        });
+
 
         // Update VK button
         $("#vk_button_holder").innerHTML =  VK.Share.button({
