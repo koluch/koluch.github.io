@@ -41,7 +41,7 @@ sharing = new function(){
 
 
         // facebook loading
-        parent.innerHTML += '<div class="widget">'
+        parent.innerHTML += '<div class="widget" id="fb_button_holder">'
         + '<div class="fb-share-button"'
         + ' data-href="http://koluch.github.io/guess-russia-regions/"'
         + ' data-layout="button"></div>'
@@ -106,9 +106,12 @@ sharing = new function(){
 
     this.updateButtons = function(guessed) {
         var resultMsg = 'Хорошо ли вы знаете Россию? Я отгадал '+language.toNum(guessed, "регион");
+
+        // Update twitter button
         $("#twitter_button_holder").innerHTML = '<a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-text="'+resultMsg+'" data-hashtags="guess-russia-regions">Tweet</a>';
         twttr.widgets.load();
 
+        // Updat VK button
         $("#vk_button_holder").innerHTML =  VK.Share.button({
             //url: 'http://mysite.com',
             title: resultMsg

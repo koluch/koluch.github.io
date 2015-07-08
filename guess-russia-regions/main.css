@@ -2,6 +2,10 @@
     font-family: Helvetica;
 }
 
+a {
+    color: white;
+}
+
 .share_panel {
     margin: 0.5em 0em 2em;
 }
@@ -112,7 +116,7 @@
 }
 
 .modal .modal_body {
-    max-width: 500px;
+    max-width: 600px;
     text-align: center;
     margin: auto;
     border: 1px solid rgb(64, 64, 64);
@@ -151,4 +155,22 @@ button {
 div#finish_msg {
     margin: 2em 0em 0.25em;
     font-size: 14pt;
+}
+
+.fb_iframe_widget {
+    display: block !important;
+    position: static !important;
+    width: 55px !important;
+    height: 20px !important;
+
+}
+
+.fb_iframe_widget > span {
+    min-width: 60px !important;
+    display: block !important;
+}
+
+#fb_button_holder iframe {
+    width: 55px !important;
+    height: 20px !important;
 }
