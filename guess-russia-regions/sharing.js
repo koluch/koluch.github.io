@@ -20,8 +20,6 @@
  */
 sharing = new function(){
 
-    this.parent = null;
-
     this.init = function(parent){
 
          this.parent = parent;
@@ -40,26 +38,35 @@ sharing = new function(){
         parent.innerHTML = '<div class="widget" id="twitter_button_holder"></div>';
 
 
-        // facebook loading
+
+
+
         parent.innerHTML += '<div class="widget" id="fb_button_holder">'
-        + '<div class="fb-share-button"'
-        + ' data-href="http://koluch.github.io/guess-russia-regions/"'
-        + ' data-layout="button"'
-        + ' data-lang="ru"></div>'
-        + '<div id="fb-root"></div>'
-        + '</div>';
+            + '<div id="fb_share" style=""><button title="Поделиться" ><span/></button><span>Поделиться</span></div>'
+            + '<div id="fb-root"></div>'
+            + '</div>';
+
         window.fbAsyncInit = function() {
             FB.init({
                 appId      : '405695916297888',
                 xfbml      : true,
-                version    : 'v2.4'
+                version    : 'v2.3'
             });
+            $("#fb_share").addEventListener("click", function() {
+                FB.ui({
+                    method: 'feed',
+                    link: 'https://developers.facebook.com/docs/',
+                    caption: 'Хорошо ли вы знаете Россию?',
+                    description: 'Игра, в которой нужно правильно угадать расположение регионов России'
+                }, function(response){});
+            })
         };
+
         (function(d, s, id){
             var js, fjs = d.getElementsByTagName(s)[0];
             if (d.getElementById(id)) {return;}
             js = d.createElement(s); js.id = id;
-            js.src = "//connect.facebook.net/ru_RU/sdk.js";
+            js.src = "//connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
 
@@ -89,7 +96,7 @@ sharing = new function(){
         $("#twitter_button_holder").innerHTML = '<a href="https://twitter.com/share" class="twitter-share-button" data-count="none" data-lang="ru" data-text="'+resultMsg+'" data-hashtags="guess-russia-regions">Твитнуть</a>';
         twttr.widgets.load();
 
-        // Updat VK button
+        // Update VK button
         $("#vk_button_holder").innerHTML =  VK.Share.button({
             //url: 'http://mysite.com',
             title: resultMsg
