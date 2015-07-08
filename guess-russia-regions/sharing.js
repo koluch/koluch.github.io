@@ -55,7 +55,7 @@ sharing = new function(){
             $("#fb_share").addEventListener("click", function() {
                 FB.ui({
                     method: 'feed',
-                    link: 'https://developers.facebook.com/docs/',
+                    link: 'http://koluch.github.io/guess-russia-regions/',
                     caption: 'Хорошо ли вы знаете Россию?',
                     description: 'Игра, в которой нужно правильно угадать расположение регионов России'
                 }, function(response){});
