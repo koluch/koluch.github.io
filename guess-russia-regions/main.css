@@ -26,8 +26,8 @@ a {
 
 .pan {
     opacity: 0.5;
-    border: 1px solid rgb(126, 126, 126);
-    border-radius: 15px;
+    /*border: 1px solid rgb(126, 126, 126);*/
+    border-radius: 3px;
     background-color: white;
 }
 
@@ -75,8 +75,8 @@ a {
 
 #correct_msg_wrapper > div{
     top: 100px;
-    color: rgb(0, 72, 0);
-    background: rgb(91, 255, 8);
+    color: rgb(19, 58, 0);
+    background: rgb(55, 253, 0);
 }
 
 #wrong_msg_wrapper > div{
