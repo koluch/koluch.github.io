@@ -249,8 +249,6 @@ function shuffleRegions(regions) {
 
         var slice = regions.slice(i, i + sliceSize);
 
-        console.log(i + " -> " + (i + sliceSize));
-
         while(slice.length>0) {   //todo: change to 0
             var j = Math.floor(Math.random() * slice.length);
             result.push(slice[j]);

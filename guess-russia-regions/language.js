@@ -18,7 +18,6 @@ language = new function(){
                 result =  map["5-19"];
             }
             else {
-                console.log(_num);
                 _num = _num % 10;
                 if(_num == 0) result =  map["0"];
                 else if(_num == 1) result =  map["1"];
