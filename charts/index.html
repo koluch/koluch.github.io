@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="application/javascript">
+        window.onload = function(){
+
+
+            function Field(canvas) {
+
+                this.zoom = 16;
+                this.stepX = this.zoom * 5;
+                this.stepY = this.zoom * 65;
+                this.centerShiftX = -585;
+                this.centerShiftY = 250;
+
+//                var stepAxisColor = "#51C2FC";
+//                var bgColor = "#3DB2FF";
+//                var axisColor = "#84DAFE";
+                var stepAxisColor = "#EEEEEE";
+                var bgColor = "#FFFFFF";
+                var axisColor = "#000000";
+
+
+                this.width = canvas.offsetWidth;
+                this.height = canvas.offsetHeight;
+
+
+                this.ctx = canvas.getContext('2d'); //todo: check for support
+
+                this.centerX = this.width/2 + this.centerShiftX;
+                this.centerY = this.height/2 + this.centerShiftY;
+
+                this.ctx.lineWidth = 1;
+
+                this.ctx.fillStyle = bgColor;
+                this.ctx.fillRect(0, 0, this.width, this.height);
+
+
+                // Draw steps
+
+                for(var i = this.centerX+this.stepX; i<this.width; i+=this.stepX) {
+                    var line = new Path2D();
+                    line.moveTo(i, 0);
+                    line.lineTo(i, this.height);
+                    this.ctx.strokeStyle = stepAxisColor;
+                    this.ctx.stroke(line);
+                }
+                for(var i = this.centerX-this.stepX; i>0; i-=this.stepX) {
+                    var line = new Path2D();
+                    line.moveTo(i, 0);
+                    line.lineTo(i, this.height);
+                    this.ctx.stroke(line);
+                }
+
+                for(var i = this.centerY+this.stepY; i<this.height; i+=this.stepY) {
+                    var line = new Path2D();
+                    line.moveTo(0, i);
+                    line.lineTo(this.width, i);
+                    this.ctx.stroke(line);
+                }
+                for(var i = this.centerY-this.stepY; i>0; i-=this.stepY) {
+                    var line = new Path2D();
+                    line.moveTo(0, i);
+                    line.lineTo(this.width, i);
+                    this.ctx.stroke(line);
+                }
+
+
+                // Draw labels
+                this.ctx.font = "8px sans-serif";
+                this.ctx.fillStyle = "#BBB";
+                var step = 0;
+                for(var i = this.centerX+this.stepX, step = 0; i<this.width; i+=this.stepX) {
+                    this.ctx.fillText(step, i, this.centerY + 8);
+                    step++;
+                }
+                for(var i = this.centerX-this.stepX, step = 0; i>0; i-=this.stepX) {
+                    this.ctx.fillText("-" + step, i, this.centerY + 8);
+                    step++;
+                }
+
+                for(var i = this.centerY+this.stepY, step = 0; i<this.height; i+=this.stepY) {
+                    this.ctx.fillText("-" + step, this.centerX - 10, i);
+                    step++;
+                }
+                for(var i = this.centerY-this.stepY, step = 0; i>0; i-=this.stepY) {
+                    this.ctx.fillText(step, this.centerX - 10, i);
+                    step++;
+                }
+
+
+
+                this.ctx.strokeStyle = axisColor;
+
+                var xAxis = new Path2D();
+                xAxis.moveTo(0, this.centerY);
+                xAxis.lineTo(this.width, this.centerY);
+                this.ctx.stroke(xAxis);
+
+                var yAxis = new Path2D();
+                yAxis.moveTo(this.centerX, 0);
+                yAxis.lineTo(this.centerX, this.height);
+                this.ctx.stroke(yAxis);
+
+
+
+            }
+
+            Field.prototype.visibleXVArea = function(){
+                return {
+                    minX:this.centerX / this.stepX * -1,
+                    maxX:(this.width - this.centerX) / this.stepX
+                }
+            };
+
+            Field.prototype.drawLine = function(fromV, toV){
+                var fromX = this.centerX + (this.stepX * fromV[0]);
+                var fromY = this.centerY - (this.stepY * fromV[1]);
+                var toX = this.centerX + (this.stepX * toV[0]);
+                var toY = this.centerY - (this.stepY * toV[1]);
+
+                var line = new Path2D();
+                line.moveTo(fromX, fromY);
+                line.lineTo(toX, toY);
+
+                this.ctx.strokeStyle = "#000";
+                this.ctx.stroke(line);
+
+            };
+
+            Field.prototype.drawQuadratic = function(vPoints) {
+                var line = new Path2D();
+                for (var i = 0; i < vPoints.length; i++) {
+                    var controlPoint = this.realXY(vPoints[i][0]);
+                    var point = this.realXY(vPoints[i][1]);
+                    if(i == 0) {
+                        line.moveTo(point[0], point[1]);
+                    }
+                    else {
+                        line.quadraticCurveTo(controlPoint[0], controlPoint[1], point[0], point[1]);
+                    }
+                }
+                this.ctx.stroke(line);
+            };
+
+            Field.prototype.realXY = function(vXY) {
+                return [
+                    this.centerX + (this.stepX * vXY[0]),
+                    this.centerY - (this.stepY * vXY[1])
+                ]
+            };
+
+            Field.prototype.drawF = function(f) {
+                var xvArea = this.visibleXVArea();
+
+                var last = null;
+                var dif = 5 / this.stepX;
+                for(var x = xvArea.minX; x<= xvArea.maxX ; x += dif) {
+                    var next = [x, f(x)];
+                    if(last) {
+                        this.drawLine(last, next);
+                    }
+                    last = next;
+                }
+            };
+
+
+            Array.prototype.foldl = function(acc, f) {
+                for (var i = 0; i < this.length; i++) {
+                    acc = f(acc, this[i])
+                }
+                return acc;
+            };
+
+
+
+
+            var field = new Field(document.getElementById("canvas"));
+
+
+            var samples = [];
+            for(var i = 0; i<1000; i++) {
+                if(i>500) {
+                    samples.push(9 + 2 * Math.random())
+                }
+                else {
+                    samples.push(3 + 2 * Math.random())
+                }
+            }
+//            var samples = [8,9,8,10,14,11,9,10,11,9,8,8];
+
+            var h = 5;
+
+            function ind(x) {
+                return Math.abs(x) <= 1 ? 1 : 0
+            }
+
+            function uniformKernel(x) {
+                return 1/2 * ind(x)
+            }
+
+            function triangularKernel(x) {
+                return (1 - Math.abs(x)) * ind(x);
+            }
+
+            function epanechnikovKernel(x) {
+                return 3/4 * (1 - x * x) * ind(x);
+            }
+
+
+            /*
+             var n = xarr.length
+             var sum = 0;
+             for(var i = 0; i < n; i++) {
+             sum += (createF(kernel))((x - xarr[i])/h)
+             }
+             return sum/(n*h)
+             */
+
+            field.drawF(function(x){ return  x * x});
+
+            field.drawF(function(x){
+                var n = samples.length;
+                var sum = samples.foldl(0, function(sum, xi){
+                    return sum + epanechnikovKernel ((x - xi)/h)
+                });
+                var result = sum / (n * h);
+                console.log(result);
+                return result
+            })
+
+
+
+        }
+    </script>
+</head>
+<body >
+    <canvas width="1500" height="700" style="border: 1px solid black;" id="canvas"></canvas>
+</body>
+</html>
