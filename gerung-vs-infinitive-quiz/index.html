@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <script src="jquery-2.1.4.min.js"></script>
+    <script type="text/javascript">
+
+
+        var data = [
+            {text: "$1 languages is hard work", options:[{text:"Learning", right:true}, {text:"Learn", right:false}]},
+            {text: "It's important $1 team meetings", options:[{text:"attending", right:false}, {text:"to attend", right:true}]},
+            {text: "He went to work despite $1 unwell", options:[{text:"feeling", right:true}, {text:"fill", right:false}]}
+        ];
+
+
+
+        $(function(){
+
+
+            function nextQuestion(lastQuestionI){
+
+                var i = lastQuestionI;
+                while(i==lastQuestionI) {
+                    i = parseInt(Math.random() * data.length);
+                }
+                var question = data[i];
+
+                $("#sentence").text(question.text.replace("$1", "..."));
+                
+                console.log(i);
+
+                var $buttons = $("#buttons");
+                $buttons.empty();
+
+                question.options.forEach(function(option){
+                    var $button = $("<button/>").text(option.text);
+                    $buttons.append($button);
+                    $button.click(function(){
+                        if(option.right) {
+                            nextQuestion(i);
+                        }
+                        else {
+                            alert('Wrong!')
+                        }
+                    });
+
+                });
+            }
+
+            nextQuestion(parseInt(Math.random() * data.length));
+
+
+
+
+        })
+
+    </script>
+
+</head>
+<body>
+    <h1 id="sentence"></h1>
+    <div id="buttons"></div>
+    <h1 id="error"></h1>
+</body>
+</html>
