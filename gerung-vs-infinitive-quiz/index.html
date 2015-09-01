@@ -18,19 +18,28 @@
 
         $(function(){
 
-
-            function nextQuestion(lastQuestionI){
-
-                var i = lastQuestionI;
-                while(i==lastQuestionI) {
-                    i = parseInt(Math.random() * data.length);
+            function makeRandomIterator(arr) {
+                var last = 0;
+                return {
+                    next: function(){
+                        if(arr.length==0) throw Error("empty array");
+                        if(arr.length==1) return arr[0];
+                        var i = last;
+                        while(i == last) {
+                            i = parseInt(Math.random() * arr.length);
+                        }
+                        last = i;
+                        return arr[i];
+                    }
                 }
-                var question = data[i];
+            }
+
+            function nextQuestion(it){
+
+                var question = it.next();
 
                 $("#sentence").text(question.text.replace("$1", "..."));
                 
-                console.log(i);
-
                 var $buttons = $("#buttons");
                 $buttons.empty();
 
@@ -39,7 +48,7 @@
                     $buttons.append($button);
                     $button.click(function(){
                         if(option.right) {
-                            nextQuestion(i);
+                            nextQuestion(it);
                         }
                         else {
                             alert('Wrong!')
@@ -49,7 +58,7 @@
                 });
             }
 
-            nextQuestion(parseInt(Math.random() * data.length));
+            nextQuestion(makeRandomIterator(data));
 
 
 
