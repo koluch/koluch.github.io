@@ -1,0 +1,56 @@
+* {
+    font-family: 'PT Serif', serif;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+#sentence {
+    font-size: 1.75em;
+    margin: 2em;
+}
+
+#state {
+    font-size: 1em;
+    font-style: italic;
+    font-weight: normal;
+}
+
+button {
+    font-size: 1.5em;
+    margin: 0 0.5em;
+}
+
+
+
+.outer {
+    position: absolute;
+    display: table;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.inner {
+    text-align: center;
+    display: inline-block;
+}
+
+button {
+    /* margin: 0; */
+}
+
+.replacer {
+    color: #00beff;
+}
+
+.replacer.error {
+    color: #ff0001;
+}
