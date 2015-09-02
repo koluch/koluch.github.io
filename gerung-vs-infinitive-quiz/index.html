@@ -114,23 +114,29 @@
                 var question = it.next();
 
                 $("#sentence").text(question.text.replace("$1", "..."));
-                
+
                 var $buttons = $("#buttons");
                 $buttons.empty();
 
-                question.options.forEach(function(option){
-                    var $button = $("<button/>").text(option.text);
-                    $buttons.append($button);
-                    $button.click(function(){
-                        if(option.right) {
-                            nextQuestion(it);
-                        }
-                        else {
-                            alert('Wrong!')
-                        }
-                    });
+                var options = question.options.slice();
 
-                });
+                while(options.length>0) {
+                    (function(){
+                        var i = parseInt(Math.random() * options.length);
+                        var option = options[i];
+                        var $button = $("<button/>").text(option.text);
+                        $buttons.append($button);
+                        $button.click(function(){
+                            if(option.right) {
+                                nextQuestion(it);
+                            }
+                            else {
+                                alert('Wrong!')
+                            }
+                        });
+                        options.splice(i,1)
+                    })()
+                }
             }
 
             nextQuestion(makeRandomIterator(data));
@@ -142,10 +148,53 @@
 
     </script>
 
+    <link href='https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+    <style>
+        * {
+            font-family: 'PT Serif', serif;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .outer {
+            position: absolute;
+            display: table;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+        }
+
+        .middle {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .inner {
+            text-align: center;
+            display: inline-block;
+        }
+
+        button {
+            margin: 1em;
+        }
+
+    </style>
+
 </head>
 <body>
-    <h1 id="sentence"></h1>
-    <div id="buttons"></div>
-    <h1 id="error"></h1>
+
+    <div class="outer">
+        <div class="middle">
+            <div class="inner">
+                <h1 id="sentence"></h1>
+                <div id="buttons"></div>
+                <h1 id="error"></h1>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
