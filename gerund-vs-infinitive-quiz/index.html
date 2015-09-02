@@ -119,7 +119,14 @@
 
                 var question = it.next();
 
-                $("#sentence").text(question.text.replace("$1", "..."));
+                var textParts = question.text.split("$1");
+                var $sentence = $("#sentence");
+                var $replacer = $("<span class='replacer'>...</span>");
+
+                $sentence.empty();
+                $sentence.append($("<span>"+textParts[0]+"</span>"));
+                $sentence.append($replacer);
+                $sentence.append($("<span>"+textParts[1]+"</span>"));
 
                 var $buttons = $("#buttons");
                 $buttons.empty();
@@ -139,6 +146,12 @@
                             else {
                                 alert('Wrong!')
                             }
+                        });
+                        $button.on('mouseover', function(){
+                            $replacer.text(option.text);
+                        });
+                        $button.on('mouseleave', function(){
+                            $replacer.text("...");
                         });
                         options.splice(i,1)
                     })()
@@ -193,6 +206,10 @@
 
         button {
             margin: 1em;
+        }
+
+        .replacer {
+            color: #00beff;
         }
 
     </style>
