@@ -66,7 +66,7 @@
             ,{text: "I learnt $1 when I was 17", options:[{text:"to drive", right:true}, {text:"driving", right:false}]}
             ,{text: "How do you manage $1 so slim", options:[{text:"to stay", right:true}, {text:"staing", right:false}]}
             ,{text: "I didn’t mean $1 you", options:[{text:"to upset", right:true}, {text:"upsetting", right:false}]}
-            ,{text: "My dad has offered to pick us up", options:[{text:"to pick", right:true}, {text:"picking", right:false}]}
+            ,{text: "My dad has offered $1 us up", options:[{text:"to pick", right:true}, {text:"picking", right:false}]}
             ,{text: "She closed her eyes and pretended $1 asleep", options:[{text:"to be", right:true}, {text:"being", right:false}]}
             ,{text: "Peter wished he’d never promised $1 them", options:[{text:"to help", right:true}, {text:"helping", right:false}]}
             ,{text: "I absolutely refuse $1 part in anything illegal", options:[{text:"to take", right:true}, {text:"taking a", right:false}]}
@@ -133,6 +133,13 @@
 
                 var options = question.options.slice();
 
+                // Create option with all variants
+                var allTexts = options.map(function(x){return x.text}).join("/");
+                options.push({
+                    text: options.map(function(x){return x.text}).join("/"),
+                    right: options.filter(function(x){return x.right}).length == options.length
+                });
+
                 while(options.length>0) {
                     (function(){
                         var i = parseInt(Math.random() * options.length);
@@ -156,6 +163,8 @@
                         options.splice(i,1)
                     })()
                 }
+
+
             }
 
             nextQuestion(makeRandomIterator(data));
