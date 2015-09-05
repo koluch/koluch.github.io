@@ -1,5 +1,10 @@
 CACHE MANIFEST
+# Version 1
+
 main.css
 main.js
 index.html
 jquery-2.1.4.min.js
+
+NETWORK:
+ *
