@@ -103,7 +103,7 @@ $(function(){
                 if(arr.length==1) return arr[0];
                 var i = last;
                 while(i == last) {
-                    i = parseInt(Math.random() * arr.length);
+                    i = Math.floor(Math.random() * arr.length);
                 }
                 last = i;
                 return arr[i];
@@ -119,7 +119,7 @@ $(function(){
         return {
             next: function(){
 
-                var i = parseInt(Math.random() * rest.length);
+                var i = Math.floor(Math.random() * rest.length);
                 var next = rest[i];
                 rest.splice(i, 1);
                 return next;
@@ -173,7 +173,7 @@ $(function(){
         showState(state);
 
         if(state.rest.length>0) {
-            var i = parseInt(Math.random() * state.rest.length);
+            var i = Math.floor(Math.random() * state.rest.length);
 
             var question = state.rest[i];
 
@@ -212,7 +212,7 @@ $(function(){
 
             while (options.length > 0) {
                 (function () {
-                    var j = parseInt(Math.random() * options.length);
+                    var j = Math.floor(Math.random() * options.length);
                     var option = options[j];
                     var $button = $("<button/>").text(option.text);
                     $buttons.append($button);
