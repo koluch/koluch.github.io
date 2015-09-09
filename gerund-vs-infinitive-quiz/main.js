@@ -89,20 +89,6 @@ var data = [
     ,{text: "Do you like $1?", options:[{text:"dancing", right:true}, {text:"to dance", right:true}]}
     ,{text: "Do you prefer $1 a hard tasks?", options:[{text:"having", right:true}, {text:"to have", right:true}]}
 
-//            ,{text: "", options:[{text:"", right:true}, {text:"", right:false}]},
-//            ,{text: "", options:[{text:"", right:true}, {text:"", right:false}]},
-//            ,{text: "", options:[{text:"", right:true}, {text:"", right:false}]},
-//            ,{text: "", options:[{text:"", right:true}, {text:"", right:false}]},
-//            ,{text: "", options:[{text:"", right:true}, {text:"", right:false}]},
-//            ,{text: "", options:[{text:"", right:true}, {text:"", right:false}]},
-//            ,{text: "", options:[{text:"", right:true}, {text:"", right:false}]},
-//            ,{text: "", options:[{text:"", right:true}, {text:"", right:false}]},
-//            ,{text: "", options:[{text:"", right:true}, {text:"", right:false}]},
-//            ,{text: "", options:[{text:"", right:true}, {text:"", right:false}]},
-//            ,{text: "", options:[{text:"", right:true}, {text:"", right:false}]},
-//            ,{text: "", options:[{text:"", right:true}, {text:"", right:false}]},
-//            ,{text: "", options:[{text:"", right:true}, {text:"", right:false}]},
-//            ,{text: "", options:[{text:"", right:true}, {text:"", right:false}]},
 ];
 
 
@@ -117,7 +103,7 @@ $(function(){
                 if(arr.length==1) return arr[0];
                 var i = last;
                 while(i == last) {
-                    i = Math.floor(Math.random() * arr.length);
+                    i = parseInt(Math.random() * arr.length);
                 }
                 last = i;
                 return arr[i];
@@ -133,7 +119,7 @@ $(function(){
         return {
             next: function(){
 
-                var i = Math.floor(Math.random() * rest.length);
+                var i = parseInt(Math.random() * rest.length);
                 var next = rest[i];
                 rest.splice(i, 1);
                 return next;
@@ -145,16 +131,15 @@ $(function(){
     }
 
     function showState(state) {
-        $("#state .left").text(state.left);
+        $("#state .left").text(state.rest.length);
         $("#state .errors").text(state.errors);
     }
 
 
     function begin() {
         var state = {
-            it: makeRandomIterator(data),
-            errors: 0,
-            left: data.length
+            rest: data.slice(),
+            errors: 0
         };
         $("#sentence").show();
         nextQuestion(state);
@@ -183,11 +168,14 @@ $(function(){
 
     function nextQuestion(state){
 
+        console.log(state.rest);
+        
         showState(state);
 
-        if(state.it.hasNext()) {
+        if(state.rest.length>0) {
+            var i = parseInt(Math.random() * state.rest.length);
 
-            var question = state.it.next();
+            var question = state.rest[i];
 
             var textParts = question.text.split("$1");
             var $sentence = $("#sentence");
@@ -224,13 +212,13 @@ $(function(){
 
             while (options.length > 0) {
                 (function () {
-                    var i = Math.floor(Math.random() * options.length);
-                    var option = options[i];
+                    var j = parseInt(Math.random() * options.length);
+                    var option = options[j];
                     var $button = $("<button/>").text(option.text);
                     $buttons.append($button);
                     $button.click(function () {
-                        state.left--;
                         if (option.right) {
+                            state.rest.splice(i, 1);
                             nextQuestion(state);
                         }
                         else {
@@ -247,7 +235,7 @@ $(function(){
                     $button.on('mouseleave', function () {
                         $replacer.text("...");
                     });
-                    options.splice(i, 1)
+                    options.splice(j, 1)
                 })()
             }
         }

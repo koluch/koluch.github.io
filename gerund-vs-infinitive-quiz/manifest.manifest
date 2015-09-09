@@ -1,5 +1,13 @@
 CACHE MANIFEST
+# Version 3
+
 main.css
 main.js
-index.html
 jquery-2.1.4.min.js
+icon_60x60.png
+icon_76x76.png
+icon_120x120.png
+icon_152x152.png
+
+NETWORK:
+*
