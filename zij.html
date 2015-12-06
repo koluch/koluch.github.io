@@ -92,7 +92,6 @@
         }
 
         .source .desc {
-            font-size: 10pt;
             margin: 2em 0;
             text-align: left;;
         }
@@ -323,14 +322,6 @@
 
             var tasks = [
                 {
-                    id: 0,
-                    title: "Sandbox",
-                    desc: "Do what you want",
-                    tests: [
-                        {from: [], to: []}
-                    ]
-                },
-                {
                     id: 1,
                     title: "Sum of numbers",
                     desc: "You have two numbers in cells 0 and 1. Put sum of them in cell 2",
@@ -343,16 +334,16 @@
                 },
                 {
                     id: 2,
-                    title: "Set 0 cell to 1",
-                    desc: "Set 0 cell to 1",
+                    title: "Set 0-cell to 1",
+                    desc: "Set 0-cell to 1",
                     tests: [
                         {from: [-1], to: [1]}
                     ]
                 },
                 {
                     id: 3,
-                    title: "Move number",
-                    desc: "Move number",
+                    title: "Move the number",
+                    desc: "Move the number from cell 0 to cell 1",
                     tests: [
                         {from: [10], to: [10,10]}
                     ]
@@ -360,12 +351,20 @@
                 {
                     id: 4,
                     title: "Multiply two numbers",
-                    desc: "Multiply two numbers",
+                    desc: "You have two numbers in cells 0 and 1. Multiply them and put the result to to the in cell 2",
                     tests: [
                         {from: [3, 4], to: ["x", "x", 21]}
                         , {from: [3, 0], to: ["x", "x", 0]}
                         , {from: [0, 4], to: ["x", "x", 0]}
                         , {from: [0, 0], to: ["x", "x", 0]}
+                    ]
+                },
+                {
+                    id: 5,
+                    title: "Sandbox",
+                    desc: "you can do anything you want",
+                    tests: [
+                        {from: [], to: []}
                     ]
                 }
             ];
@@ -385,7 +384,6 @@
     </script>
 </head>
 <body>
-
 <table id="body" class="layout_tbl">
     <tr>
         <td class="tasks">
@@ -395,7 +393,8 @@
             <table class="layout_tbl">
                 <tr>
                     <td colspan="2">
-                        <div class="desc"></div>
+                        <p>See machine definition in <a href="http://blog.jgc.org/2013/05/the-two-problems-i-had-to-solve-in-my.html">John Graham-Cumming blog post</a></p>
+                        <div>Task: "<span class="desc"></span>"</div>
                     </td>
                 </tr>
                 <tr>
