@@ -17,6 +17,7 @@ a {
 .back {
   position: fixed;
   background: black;
+  padding: 8px 16px;
   padding: 0.5rem 1rem;
   left: 0;
   top: 0;
@@ -24,5 +25,6 @@ a {
 
 .back * {
   color: white;
+  font-size: 12px;
   font-size: 0.75rem;
 }
