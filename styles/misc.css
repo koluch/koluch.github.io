@@ -28,3 +28,7 @@ article > div {
 article > div, article > div * {
     font-size: 0.75rem;
 }
+
+img.favicon {
+    vertical-align: super;
+}
