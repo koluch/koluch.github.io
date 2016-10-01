@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700italic,400italic,700' rel='stylesheet'
+          type='text/css'>
+    <script src="javascripts/sha256.js"></script>
+    <script>
+
+        function id(_id) {
+            return document.getElementById(_id)
+        }
+
+        function calc() {
+            var shaObj = new jsSHA("SHA-256", "TEXT");
+            shaObj.setHMACKey(id('key').value, "TEXT");
+            shaObj.update(id('site').value + ":" + id('id').value);
+            return "U4$:" + shaObj.getHMAC("HEX").substring(0, 16)
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            id('show').addEventListener('click', function() {
+                if (id("result").textContent === '') {
+                    id("result").textContent = calc();
+                    id('key').value = "";
+                }
+                else {
+                    id("result").textContent = '';
+                }
+            });
+            id('copy').addEventListener('click', function() {
+                var input = id("hidden_input");
+                input.value = calc();
+                input.select();
+                try {
+                    document.execCommand('copy');
+                } catch (err) {
+                    console.log('Oops, unable to copy');
+                }
+                input.value = "";
+                id('key').value = "";
+            })
+        });
+    </script>
+    <style>
+        * {
+            font-size: 14pt;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            text-align: center;
+        }
+
+        #result {
+            font-weight: bold;
+        }
+
+        input {
+            display: block;
+            margin: 5px;
+            font-size: 14pt;
+        }
+
+        @media (min-width: 700px) {
+
+        }
+    </style>
+    <title>Nikolai Mavrenkov</title>
+</head>
+
+<body>
+    <div class="container">
+        <input id="site" value="vk.com"/>
+        <input id="id" value="koluch@koluch.ru"/>
+        <input id="key" type="password"/>
+        <div id="result"></div>
+        <button id="copy">Copy</button>
+        <button id="show">Show</button>
+    </div>
+    <input id="hidden_input" style="opacity: 0; position: fixed; left: 0; top: 100%;"/>
+</body>
+</html>
