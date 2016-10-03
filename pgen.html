@@ -36,6 +36,7 @@
                 var input = id("hidden_input");
                 input.value = calc();
                 input.select();
+                input.setSelectionRange(0, 9999);
                 try {
                     document.execCommand('copy');
                 } catch (err) {
@@ -44,9 +45,6 @@
                 input.value = "";
                 id('key').value = "";
             });
-            id('result').addEventListener('focus', function() {
-                this.select()
-            })
         });
 
 
