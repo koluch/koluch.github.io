@@ -23,12 +23,12 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             id('show').addEventListener('click', function() {
-                if (id("result").textContent === '') {
-                    id("result").textContent = calc();
+                if (id("result").value === '') {
+                    id("result").value = calc();
                     id('key').value = "";
                 }
                 else {
-                    id("result").textContent = '';
+                    id("result").value = '';
                 }
             });
             id('copy').addEventListener('click', function() {
@@ -42,8 +42,13 @@
                 }
                 input.value = "";
                 id('key').value = "";
+            });
+            id('resullt').addEventListener('click', function() {
+                this.select()
             })
         });
+
+
     </script>
     <style>
         * {
@@ -85,7 +90,7 @@
         <input id="site" value="" autocorrect="off" autocapitalize="none"/>
         <input id="id" value="" autocorrect="off" autocapitalize="none"/>
         <input id="key" type="password" />
-        <div id="result"></div>
+        <input id="result" value="">
         <button id="copy">Copy</button>
         <button id="show">Show</button>
     </div>
