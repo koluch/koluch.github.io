@@ -25,6 +25,7 @@
             id('show').addEventListener('click', function() {
                 if (id("result").value === '') {
                     id("result").value = calc();
+                    id("result").select();
                     id('key').value = "";
                 }
                 else {
