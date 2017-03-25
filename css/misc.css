@@ -452,7 +452,6 @@ h1 {
     font-weight: bold;
     letter-spacing: 1px;
     line-height: 1.2em;
-    margin: 4rem;
 }
 
 h2 {
@@ -510,7 +509,7 @@ body {
 }
 
 h1 {
-    margin: 4rem 0;
+    margin: 4rem 0 2rem 0;
 }
 
 h2 {
@@ -518,7 +517,7 @@ h2 {
 }
 
 .content {
-    width: 760px;
+    max-width: 760px;
 }
 
 .project {

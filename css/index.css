@@ -452,7 +452,6 @@ h1 {
     font-weight: bold;
     letter-spacing: 1px;
     line-height: 1.2em;
-    margin: 4rem;
 }
 
 h2 {
@@ -512,6 +511,14 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+h1:not(:last-child), .contacts:not(:last-child), .menu:not(:last-child) {
+    margin-bottom: 3rem;
+}
+
+h1 {
+    margin-top: 2rem;
 }
 
 .contacts > a:not(:last-child) {
