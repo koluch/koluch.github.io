@@ -10,6 +10,8 @@ h1 {
 
 h2 {
     margin: 0.5rem 0;
+    display: flex;
+    align-items: center;
 }
 
 .content {
@@ -33,19 +35,25 @@ h2 {
     &__links {
         display: flex;
         align-items: flex-start;
-        flex-direction: column;
+        flex-direction: row;
         margin: 1rem 0;
         font-size: 0.75rem;
     }
 
     &__link {
-        margin-right: 2rem;
-        padding: 2px 3px;
+        margin-right: 0.5rem;
         display: flex;
         align-items: center;
     }
 
     &__favicon {
+        margin-left: 0.5rem;
+        max-width: 32px;
+        max-height: 32px;
+        border: 1px solid #efefef;
+    }
+
+    &__icon {
         width: 16px;
         height: 16px;
         margin-right: 2px;

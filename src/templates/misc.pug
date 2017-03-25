@@ -15,6 +15,7 @@ html
                 var projects = [
                     {
                         title: 'Health&Help',
+                        icon: 'hh.svg',
                         link: 'https://he-he.org',
                         github: 'https://github.com/he-he-org',
                         githubTitle: 'he-he-org',
@@ -104,19 +105,14 @@ html
                 +b.project-group
                     each project in project_group
                         +b.project
-                            h2 #{project.title}
-                            +e.links
-                                +e({tag: a}).link(href=project.github)
-                                    +e({tag: 'img'}).favicon(src='images/misc/github-16.png')
-                                    if project.githubTitle
-                                        | #{project.githubTitle}
-                                    else
-                                        | #{project.github}
-                                +e({tag: a}).link(href=project.link target='_blank')
-                                    if (project.icon)
-                                        +e({tag: 'img'}).favicon(src='images/misc/' + project.icon)
-                                    else
-                                        +e({tag: 'img'}).favicon(src='images/misc/external-link.svg')
-                                    | #{project.link}
+                            h2
+                                | #{project.title}
+                                if (project.icon)
+                                    +e({tag: 'img'}).favicon(src='images/misc/' + project.icon)
                             +e.description
                                 | !{project.description}
+                            +e.links
+                                +e({tag: a}).link(href=project.github)
+                                    +e({tag: 'img'}).icon(src='images/misc/github-16.png')
+                                +e({tag: a}).link(href=project.link target='_blank')
+                                    +e({tag: 'img'}).icon(src='images/misc/external-link.svg')
