@@ -12,30 +12,34 @@ html
                 a(href="/") (back)
 
             -
-                const projects = [
+                var projects = [
                     {
                         title: 'Health&Help',
                         link: 'https://he-he.org',
                         github: 'https://github.com/he-he-org',
+                        githubTitle: 'he-he-org',
                         description: 'This is a site for charity organization Health&Help'
                     },
                     {
                         title: 'DB Scheme',
                         link: 'http://www.koluch.ru/db-scheme/',
                         github: 'https://github.com/koluch/db-scheme',
+                        githubTitle: 'koluch/db-scheme',
                         description: 'Simple tool for drawing relational database schemes'
                     },
                     {
                         title: 'morph-dict.github.io',
                         link: 'http://morph-dict.github.io/',
                         github: 'https://github.com/morph-dict',
+                        githubTitle: 'morph-dict',
                         description: 'Morphological dictionary of Russian language, implemented using only static files.',
                     },
                     {
                         title: 'Weethr',
                         icon: 'weethr-32.png',
                         link: 'https://weethr.github.io/',
-                        github: 'https://github.com/weethr/',
+                        github: 'weethr',
+                        githubTitle: 'weethr',
                         description: 'Weather application build using React. It was a test assignment for a job interview'
                                   + ' in some company, now it\'s just a simple weather app for demonstration',
                     },
@@ -43,19 +47,22 @@ html
                         title: 'irregular-verbs.github.io',
                         link: 'http://irregular-verbs.github.io/',
                         github: 'https://github.com/irregular-verbs',
+                        githubTitle: 'irregular-verbs',
                         description: 'Simple static site with irregular English verbs. Built using ReactJS on server and client sides.',
                     },
                     {
                         title: 'MoneyTrack',
                         icon: 'moneytrack-32.png',
                         link: 'https://moneytrack.github.io/',
-                        github: 'https://moneytrack.github.io/',
+                        github: 'https://github.com/moneytrack',
+                        githubTitle: 'moneytrack',
                         description: 'Simple expenses tracking application; I am still working on it.'
                     },
                     {
                         title: 'Guess-Russia-Regions game',
                         link: 'http://www.koluch.ru/guess-russia-regions/',
                         github: 'https://github.com/koluch/guess-russia-regions',
+                        githubTitle: 'koluch/guess-russia-regions',
                         description: 'Just a little game about guessing regions of Russia. Based on idea of a'
                                         + ' game called “<a href="http://www.buzzfeed.com/robinedds/how-well-do-you-actually-know-the-us-states">How'
                                         + ' Well Do You Actually Know The US States</a>”.'
@@ -65,12 +72,14 @@ html
                         title: 'jstbl',
                         link: 'https://www.npmjs.com/package/jstbl',
                         github: 'https://github.com/koluch/jstbl',
+                        githubTitle: 'koluch/jstbl',
                         description: 'Util for printing JSON documents in table maner',
                     },
                     {
                         title: 'react-markup',
                         link: 'https://www.npmjs.com/package/react-markup',
                         github: 'https://github.com/koluch/react-markup',
+                        githubTitle: 'koluch/react-markup',
                         description: '"hyperscript-like" library for React',
                     },
                     {
@@ -84,24 +93,30 @@ html
                                       + ' problems I had to solve'
                                       + ' in my Oxford interview</a>” by John Graham-Cumming. I made it just for fun',
                     },
-
                 ]
+                const project_groups = []
+                while(projects.length > 0) {
+                    project_groups.push(projects.slice(0, 2))
+                    projects = projects.slice(2)
+                }
 
-            each project in projects
-                +b.project
-                    h2 #{project.title}
-                    +e.links
-                        +e({tag: a}).link(href=project.github)
-                            +e({tag: 'img'}).favicon(src='images/misc/github-16.png')
-                            if project.githubTitle
-                                | #{project.githubTitle}
-                            else
-                                | #{project.github}
-                        +e({tag: a}).link(href=project.link target='_blank')
-                            if (project.icon)
-                                +e({tag: 'img'}).favicon(src='images/misc/' + project.icon)
-                            else
-                                +e({tag: 'img'}).favicon(src='images/misc/external-link.svg')
-                            | #{project.link}
-                    +e.description
-                        | !{project.description}
+            each project_group in project_groups
+                +b.project-group
+                    each project in project_group
+                        +b.project
+                            h2 #{project.title}
+                            +e.links
+                                +e({tag: a}).link(href=project.github)
+                                    +e({tag: 'img'}).favicon(src='images/misc/github-16.png')
+                                    if project.githubTitle
+                                        | #{project.githubTitle}
+                                    else
+                                        | #{project.github}
+                                +e({tag: a}).link(href=project.link target='_blank')
+                                    if (project.icon)
+                                        +e({tag: 'img'}).favicon(src='images/misc/' + project.icon)
+                                    else
+                                        +e({tag: 'img'}).favicon(src='images/misc/external-link.svg')
+                                    | #{project.link}
+                            +e.description
+                                | !{project.description}

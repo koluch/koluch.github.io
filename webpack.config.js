@@ -15,8 +15,25 @@ const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-function pug() {
-    return (context) => ({
+const basePostcssPlugins = [
+    require('postcss-import'),
+    require('postcss-css-reset'),
+    require('postcss-extend'),
+    require('postcss-nested'),
+    require('postcss-advanced-variables'),
+]
+
+const prodPostcssPlugins = [
+    require('autoprefixer')({ browsers: ['last 2 versions'] }),
+    require('cssnano')({safe: true}),
+]
+
+module.exports = createConfig([
+    entryPoint({
+        index: './src/index.js',
+        misc: './src/misc.js',
+    }),
+    (context) => ({
         module: {
             loaders: [
                 {
@@ -25,22 +42,12 @@ function pug() {
                 },
             ]
         },
-
-    })
-}
-
-module.exports = createConfig([
-    entryPoint({
-        index: './src/index.js',
-        misc: './src/misc.js',
     }),
-    pug(),
-    postcss([
-        require('postcss-import'),
-        require('postcss-css-reset'),
-        require('postcss-extend'),
-        require('postcss-nested'),
-        require('postcss-advanced-variables'),
+    env('development', [
+        postcss(basePostcssPlugins)
+    ]),
+    env('production', [
+        postcss(basePostcssPlugins.concat(prodPostcssPlugins)),
     ]),
     extractText('../css/[name].css'),
     addPlugins([
@@ -76,10 +83,6 @@ module.exports = createConfig([
         sourceMaps()
     ]),
     env('production', [
-        // postcss([
-        //     require('autoprefixer')({ browsers: ['last 2 versions'] }),
-        //     require('cssnano')({safe: true}),
-        // ]),
         setOutput('./js/[name].js'),
     ])
 ])
