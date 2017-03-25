@@ -36,38 +36,11 @@ html
                         description: 'Morphological dictionary of Russian language, implemented using only static files.',
                     },
                     {
-                        title: 'Weethr',
-                        icon: 'weethr-32.png',
-                        link: 'https://weethr.github.io/',
-                        github: 'weethr',
-                        githubTitle: 'weethr',
-                        description: 'Weather application build using React. It was a test assignment for a job interview'
-                                  + ' in some company, now it\'s just a simple weather app for demonstration',
-                    },
-                    {
                         title: 'irregular-verbs.github.io',
                         link: 'http://irregular-verbs.github.io/',
                         github: 'https://github.com/irregular-verbs',
                         githubTitle: 'irregular-verbs',
                         description: 'Simple static site with irregular English verbs. Built using ReactJS on server and client sides.',
-                    },
-                    {
-                        title: 'MoneyTrack',
-                        icon: 'moneytrack-32.png',
-                        link: 'https://moneytrack.github.io/',
-                        github: 'https://github.com/moneytrack',
-                        githubTitle: 'moneytrack',
-                        description: 'Simple expenses tracking application; I am still working on it.'
-                    },
-                    {
-                        title: 'Guess-Russia-Regions game',
-                        link: 'http://www.koluch.ru/guess-russia-regions/',
-                        github: 'https://github.com/koluch/guess-russia-regions',
-                        githubTitle: 'koluch/guess-russia-regions',
-                        description: 'Just a little game about guessing regions of Russia. Based on idea of a'
-                                        + ' game called “<a href="http://www.buzzfeed.com/robinedds/how-well-do-you-actually-know-the-us-states">How'
-                                        + ' Well Do You Actually Know The US States</a>”.'
-                                        + ' It\'s in Russian, buy the way.',
                     },
                     {
                         title: 'jstbl',
@@ -82,6 +55,33 @@ html
                         github: 'https://github.com/koluch/react-markup',
                         githubTitle: 'koluch/react-markup',
                         description: '"hyperscript-like" library for React',
+                    },
+                    {
+                        title: 'Guess-Russia-Regions game',
+                        link: 'http://www.koluch.ru/guess-russia-regions/',
+                        github: 'https://github.com/koluch/guess-russia-regions',
+                        githubTitle: 'koluch/guess-russia-regions',
+                        description: 'Just a little game about guessing regions of Russia. Based on idea of a'
+                                        + ' game called “<a href="http://www.buzzfeed.com/robinedds/how-well-do-you-actually-know-the-us-states">How'
+                                        + ' Well Do You Actually Know The US States</a>”.'
+                                        + ' It\'s in Russian, buy the way.',
+                    },
+                    {
+                        title: 'Weethr',
+                        icon: 'weethr-32.png',
+                        link: 'https://weethr.github.io/',
+                        github: 'weethr',
+                        githubTitle: 'weethr',
+                        description: 'Weather application build using React. It was a test assignment for a job interview'
+                                  + ' in some company, now it\'s just a simple weather app for demonstration',
+                    },
+                    {
+                        title: 'MoneyTrack',
+                        icon: 'moneytrack-32.png',
+                        link: 'https://moneytrack.github.io/',
+                        github: 'https://github.com/moneytrack',
+                        githubTitle: 'moneytrack',
+                        description: 'Simple expenses tracking application; I am still working on it.'
                     },
                     {
                         title: 'The Z Machine',
@@ -107,12 +107,13 @@ html
                         +b.project
                             h2
                                 | #{project.title}
-                                if (project.icon)
-                                    +e({tag: 'img'}).favicon(src='images/misc/' + project.icon)
                             +e.description
                                 | !{project.description}
                             +e.links
-                                +e({tag: a}).link(href=project.github)
-                                    +e({tag: 'img'}).icon(src='images/misc/github-16.png')
-                                +e({tag: a}).link(href=project.link target='_blank')
-                                    +e({tag: 'img'}).icon(src='images/misc/external-link.svg')
+                                +e.A.link(href=project.link target='_blank')
+                                    if (project.icon)
+                                        +e.IMG.icon._border(src='images/misc/' + project.icon)
+                                    else
+                                        +e.IMG.icon(src='images/misc/external-link.svg')
+                                +e.A.link(href=project.github)
+                                    +e.IMG.icon(src='images/misc/github-16.png')
