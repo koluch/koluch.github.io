@@ -1,0 +1,16 @@
+@import "_common.css";
+
+body {
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contacts {
+    > a:not(:last-child) {
+        margin-right: 1rem;
+    }
+}

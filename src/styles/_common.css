@@ -1,0 +1,53 @@
+@reset-global pc;
+
+html {
+    font-family: "Helvetica Neue", Helvetica, STHeiTi, Arial, sans-serif;
+    font-size: 16px;
+}
+
+:root {
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.25rem;
+    --space-6: 1.5rem;
+    --space-7: 1.75rem;
+    --space-8: 2rem;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    line-height: 1.2em;
+    margin: 4rem;
+}
+
+h2 {
+    font-size: 1.75rem;
+    line-height: 1.2em;
+    font-weight: bold;
+}
+
+a, a * {
+    color: black;
+}
+
+.margin {
+    &-v {
+        &-1 { margin-top: var(--space-1);  margin-bottom: var(--space-1); }
+        &-2 { margin-top: var(--space-2);  margin-bottom: var(--space-2); }
+        &-3 { margin-top: var(--space-3);  margin-bottom: var(--space-3); }
+        &-4 { margin-top: var(--space-4);  margin-bottom: var(--space-4); }
+        &-5 { margin-top: var(--space-5);  margin-bottom: var(--space-5); }
+        &-6 { margin-top: var(--space-6);  margin-bottom: var(--space-6); }
+        &-7 { margin-top: var(--space-7);  margin-bottom: var(--space-7); }
+        &-8 { margin-top: var(--space-8);  margin-bottom: var(--space-8); }
+    }
+}

@@ -1,0 +1,42 @@
+{
+  "name": "koluch.github.io",
+  "version": "1.0.0",
+  "description": "My personal site",
+  "main": "index.js",
+  "scripts": {
+    "start": "rm -rf ./build/** && NODE_ENV=development ./node_modules/.bin/webpack --watch",
+    "build": "NODE_ENV=production ./node_modules/.bin/webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koluch/koluch.github.io.git"
+  },
+  "author": "Nikolai Mavrenkov <koluch@koluch.ru>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/koluch/koluch.github.io/issues"
+  },
+  "homepage": "https://github.com/koluch/koluch.github.io#readme",
+  "devDependencies": {
+    "@webpack-blocks/dev-server2": "^0.4.0",
+    "@webpack-blocks/extract-text2": "^0.4.0",
+    "@webpack-blocks/postcss": "^0.4.2",
+    "@webpack-blocks/webpack2": "^0.4.0",
+    "autoprefixer": "^6.7.7",
+    "copy-webpack-plugin": "^4.0.1",
+    "cssnano": "^3.10.0",
+    "html-webpack-plugin": "^2.28.0",
+    "html-webpack-plugin-extra-files": "^1.4.0",
+    "postcss-advanced-variables": "^1.2.2",
+    "postcss-css-reset": "^1.0.2",
+    "postcss-extend": "^1.0.5",
+    "postcss-import": "^9.1.0",
+    "postcss-loader": "^1.2.1",
+    "postcss-nested": "^1.0.0",
+    "postcss-scss": "^0.4.0",
+    "pug": "^2.0.0-beta11",
+    "pug-static-loader": "0.0.1",
+    "webpack-build-notifier": "^0.1.13"
+  }
+}

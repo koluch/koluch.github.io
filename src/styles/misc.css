@@ -1,0 +1,46 @@
+@import "_common.css";
+
+body {
+    align-items: center;
+}
+
+h1 {
+    margin: 4rem 0;
+}
+
+h2 {
+    margin: 0.5rem 0;
+}
+
+.content {
+    width: 760px;
+}
+
+.project {
+    margin: 3rem 0;
+
+    &__links {
+        margin: 1rem 0;
+        display: flex;
+        align-items: center;
+        font-size: 0.75rem;
+    }
+
+    &__link {
+        margin-right: 2rem;
+        padding: 2px 3px;
+        display: flex;
+        align-items: center;
+    }
+
+    &__favicon {
+        width: 16px;
+        height: 16px;
+        margin-right: 2px;
+    }
+
+    &__description {
+        margin: 0.25rem 0;
+        line-height: 1.25em;
+    }
+}
