@@ -1,5 +1,9 @@
 @reset-global pc;
 
+* {
+    box-sizing: border-box;
+}
+
 html {
     font-family: "Helvetica Neue", Helvetica, STHeiTi, Arial, sans-serif;
     font-size: 16px;
