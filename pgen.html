@@ -36,7 +36,7 @@
         function calc() {
             var shaObj = new jsSHA("SHA-256", "TEXT");
             shaObj.setHMACKey(id('key').value, "TEXT");
-            shaObj.update(id('site').value + ":" + id('id').value);
+            shaObj.update(id('service').value);
             return "U4$:" + shaObj.getHMAC("HEX").substring(0, 16)
         }
 
@@ -52,7 +52,7 @@
                 }
             });
             id('copy').addEventListener('click', function() {
-                var input = id("hidden_input");
+                const input = id("hidden_input");
                 input.value = calc();
                 input.select();
                 input.setSelectionRange(0, 9999);
@@ -101,8 +101,9 @@
 
 <body>
     <div class="container">
-        <input id="site" value="" autocorrect="off" autocapitalize="none"/>
-        <input id="id" value="" autocorrect="off" autocapitalize="none"/>
+        <select id="service">
+            <option value="google.com:koluch.ru@gmail.com">google</option>
+        </select>
         <input id="key" type="password" />
         <input id="result" value="">
         <button id="copy">Copy</button>
