@@ -4,14 +4,6 @@ body {
     align-items: center;
 }
 
-h1 {
-    margin: 4rem 0;
-}
-
-h2 {
-    margin: 1rem 0;
-}
-
 .content {
     max-width: 760px;
 }

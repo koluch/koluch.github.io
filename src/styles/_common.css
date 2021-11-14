@@ -14,17 +14,6 @@ body {
     flex-direction: column;
 }
 
-h1 {
-    font-size: 3rem;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-h2 {
-    font-size: 1.75rem;
-    font-weight: bold;
-}
-
 a, a * {
     color: black;
 }
